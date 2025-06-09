@@ -424,8 +424,6 @@ document.getElementById("mainButtons").style.display = "block";
     // tetapi tidak dikirim ke server karena belum pakai backend.
   }
 }
-
-
     function resetGame() {
       currentQuestionIndex = 0;
       score = 0;
@@ -502,12 +500,13 @@ document.getElementById("mainButtons").style.display = "block";
         document.getElementById("finishPopup").style.display = "flex";
     }
 
-    function finishEarly() {
+    async function finishEarly() {
       document.getElementById("confirmPopup").style.display = "none";
-      finishGame();
+      await finishGame(); // <- tambahkan await
       endTime = Date.now();
       const durationInSeconds = Math.floor((endTime - startTime) / 1000);
     }
+
 
     window.onclick = function(event) {
       const finishPopup = document.getElementById("finishPopup");

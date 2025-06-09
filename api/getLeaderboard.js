@@ -1,6 +1,6 @@
 import { supabase } from './_lib/supabaseClient.js';
 
-export default async function handler(request, response) {
+module.exports = async (req, res) => {
   // Hanya izinkan metode GET
   if (request.method !== 'GET') {
     return response.status(405).json({ message: 'Method Not Allowed' });

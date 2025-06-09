@@ -236,9 +236,11 @@ let inTrial = true;
 let startTime;
 let endTime;
 
+
     const questions = ["SETARA", "TIM", "BERSAMA", "ADIL","RUKUN","SUKU","DAMAI"];
     let currentQuestionIndex = 0;
     let score = 0;
+    let durationInSeconds = 0;
 
     const dropZone = document.getElementById("dropZone");
     const choices = document.getElementById("choices");
@@ -459,7 +461,7 @@ document.getElementById("mainButtons").style.display = "block";
     }
 
   async function saveScore() {
-        if (!currentplayerName) return;
+        if (!playerName) return;
         try {
             await fetch('/api/saveScore', {
                 method: 'POST',
@@ -492,7 +494,7 @@ document.getElementById("mainButtons").style.display = "block";
             userHighScore = score; 
         }
 
-        const finalText = `Permainan selesai, <strong>${currentUserID}</strong>!
+        const finalText = `Permainan selesai, <strong>${playerName}</strong>!
         <br>Skor akhir kamu: <strong>${score}</strong> dari ${questions.length}.
         <br>Skor tertinggi kamu di server: <strong>${userHighScore}</strong>.`;
         
@@ -501,10 +503,10 @@ document.getElementById("mainButtons").style.display = "block";
     }
 
     async function finishEarly() {
-  document.getElementById("confirmPopup").style.display = "none";
-  endTime = Date.now();
-  durationInSeconds = Math.floor((endTime - startTime) / 1000);
-  await finishGame();
+    document.getElementById("confirmPopup").style.display = "none";
+    endTime = Date.now();
+    durationInSeconds = Math.floor((endTime - startTime) / 1000);
+    await finishGame();
 }
 
 

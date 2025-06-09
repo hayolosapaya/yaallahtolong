@@ -343,6 +343,11 @@ document.getElementById("mainButtons").style.display = "block";
 
 
     function loadQuestion() {
+      if (currentQuestionIndex >= questions.length) {
+        finishGame();
+        return;
+      }
+
       dropZone.innerHTML = "";
       choices.innerHTML = "";
 
@@ -413,9 +418,7 @@ document.getElementById("mainButtons").style.display = "block";
       if (currentQuestionIndex < questions.length) {
         loadQuestion();
       } else {
-        const finalText = `Permainan selesai! Skor akhir kamu: ${score} dari ${questions.length}`;
-        document.getElementById("finalScoreText").textContent = finalText;
-        document.getElementById("finishPopup").style.display = "flex";
+        finishGame();
         endTime = Date.now();
         const durationInSeconds = Math.floor((endTime - startTime) / 1000);
     // Data durasi tetap dihitung jika ingin dipakai di masa depan,
@@ -484,6 +487,36 @@ document.getElementById("mainButtons").style.display = "block";
         } catch (e) {
             console.error("Gagal menyimpan skor ke server:", e);
         }
+    }
+
+    async function finishGame() {
+        await saveScore();
+
+        let userHighScore = score;
+        try {
+            const response = await fetch(`/api/getScore?userId=${currentUserID}`);
+            const data = await response.json();
+            if (data && typeof data.score !== 'undefined') {
+                userHighScore = data.score;
+            }
+        } catch (e) {
+            console.error("Gagal mengambil skor tertinggi:", e);
+            userHighScore = score; 
+        }
+
+        const finalText = `Permainan selesai, <strong>${currentUserID}</strong>!
+        <br>Skor akhir kamu: <strong>${score}</strong> dari ${questions.length}.
+        <br>Skor tertinggi kamu di server: <strong>${userHighScore}</strong>.`;
+        
+        document.getElementById("finalScoreText").innerHTML = finalText;
+        document.getElementById("finishPopup").style.display = "flex";
+    }
+
+    function finishEarly() {
+      document.getElementById("confirmPopup").style.display = "none";
+      finishGame();
+      endTime = Date.now();
+      const durationInSeconds = Math.floor((endTime - startTime) / 1000);
     }
 
     window.onclick = function(event) {

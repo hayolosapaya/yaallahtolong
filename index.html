@@ -419,7 +419,7 @@ document.getElementById("mainButtons").style.display = "block";
         loadQuestion();
       } else {
         endTime = Date.now();
-        const durationInSeconds = Math.floor((endTime - startTime) / 1000);
+        durationInSeconds = Math.floor((endTime - startTime) / 1000);
         finishGame();
     // Data durasi tetap dihitung jika ingin dipakai di masa depan,
     // tetapi tidak dikirim ke server karena belum pakai backend.

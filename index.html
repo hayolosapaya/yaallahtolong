@@ -466,9 +466,9 @@ document.getElementById("mainButtons").style.display = "block";
   endTime = Date.now();
   const durationInSeconds = Math.floor((endTime - startTime) / 1000);
     }
-    
+
   async function saveScore() {
-        if (!currentUserID) return;
+        if (!currentplayerName) return;
         try {
             await fetch('/api/saveScore', {
                 method: 'POST',

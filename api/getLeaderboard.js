@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     // Ambil 10 data teratas dari tabel 'scores'
     // Urutkan berdasarkan 'score' secara menurun (descending)
     const { data, error } = await supabase
-      .from('leaderboard')
+      .from('scores')
       .select('name, nrp, score, duration')
       .order('score', { ascending: false })
       .order('duration',{ascending:true})

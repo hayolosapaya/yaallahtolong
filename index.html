@@ -501,11 +501,11 @@ document.getElementById("mainButtons").style.display = "block";
     }
 
     async function finishEarly() {
-      document.getElementById("confirmPopup").style.display = "none";
-      await finishGame(); // <- tambahkan await
-      endTime = Date.now();
-      const durationInSeconds = Math.floor((endTime - startTime) / 1000);
-    }
+  document.getElementById("confirmPopup").style.display = "none";
+  endTime = Date.now();
+  durationInSeconds = Math.floor((endTime - startTime) / 1000);
+  await finishGame();
+}
 
 
     window.onclick = function(event) {

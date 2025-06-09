@@ -168,6 +168,7 @@
   </style>
 </head>
 <body>
+
   <div class="container">
    <h1>Susun Kata Isyarat</h1>
    <div id="playerForm" style="text-align: left; max-width: 400px; margin: auto; padding-top: 20px;">
@@ -180,7 +181,6 @@
   <button class="btn" onclick="startGame()" style="width: 100%;">Mulai Game</button>
 </div>
 
-    
     <div id="gameArea" style="display: none;">
   <div class="question" id="questionText">Soal 1 dari 4 — Ayo susun kata:</div>
   <div class="score" id="score">Skor: 0</div>
@@ -341,7 +341,6 @@ document.getElementById("mainButtons").style.display = "block";
   loadQuestion();
 }
 
-
     function loadQuestion() {
       if (currentQuestionIndex >= questions.length) {
         finishGame();
@@ -461,15 +460,6 @@ document.getElementById("mainButtons").style.display = "block";
       document.getElementById("confirmPopup").style.display = "none";
     }
 
-    function finishEarly() {
-  document.getElementById("confirmPopup").style.display = "none";
-  const finalText = `Permainan selesai! Skor akhir kamu: ${score} dari ${questions.length}`;
-  document.getElementById("finalScoreText").textContent = finalText;
-  document.getElementById("finishPopup").style.display = "flex";
-  endTime = Date.now();
-  const durationInSeconds = Math.floor((endTime - startTime) / 1000);
-    }
-
   async function saveScore() {
         if (!currentplayerName) return;
         try {
@@ -494,7 +484,7 @@ document.getElementById("mainButtons").style.display = "block";
 
         let userHighScore = score;
         try {
-            const response = await fetch(`/api/getScore?userId=${currentUserID}`);
+            const response = await fetch(`/api/getScore?playerName=${playerName}`);
             const data = await response.json();
             if (data && typeof data.score !== 'undefined') {
                 userHighScore = data.score;
@@ -530,7 +520,6 @@ document.getElementById("mainButtons").style.display = "block";
       }
     };
 
-    loadQuestion();
   </script>
 </body>
 </html>

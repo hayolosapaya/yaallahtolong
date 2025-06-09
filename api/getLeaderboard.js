@@ -1,9 +1,9 @@
 import { supabase } from './_lib/supabaseClient.js';
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   // Hanya izinkan metode GET
-  if (request.method !== 'GET') {
-    return response.status(405).json({ message: 'Method Not Allowed' });
+  if (req.method !== 'GET') {
+    return res.status(405).json({ message: 'Method Not Allowed' });
   }
 
   try {
@@ -21,9 +21,9 @@ module.exports = async (req, res) => {
     }
 
     // Kirim data sebagai response JSON
-    return response.status(200).json(data);
+    return res.status(200).json(data);
 
   } catch (error) {
-    return response.status(500).json({ message: 'Error fetching leaderboard data', error: error.message });
+    return res.status(500).json({ message: 'Error fetching leaderboard data', error: error.message });
   }
 }

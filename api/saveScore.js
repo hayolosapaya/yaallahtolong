@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     const { name, score } = req.body;
 
-    console.log('Received data:', { name, score });
+    console.log('Received data:', { name, nrp, score, duration });
 
     if (!name || typeof score !== 'number') {
       console.error('Invalid data:', { name, score });
@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
     const { data, error } = await supabase
       .from('scores')
-      .insert([{ name, score }]);
+      .insert([{ name, nrp, score, duration }]);
 
     if (error) {
       console.error('Insert error:', error);

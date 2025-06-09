@@ -465,21 +465,26 @@ document.getElementById("mainButtons").style.display = "block";
   document.getElementById("finishPopup").style.display = "flex";
   endTime = Date.now();
   const durationInSeconds = Math.floor((endTime - startTime) / 1000);
-
-  fetch('/api/saveScore', {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: playerName,
-      nrp: playerNRP,
-      score: score,
-      duration: durationInSeconds
-    })
-  })
-  .then(res => res.json())
-  .then(data => console.log("Skor disimpan:", data))
-  .catch(err => console.error("Gagal menyimpan skor:", err));
-}
+    }
+    
+  async function saveScore() {
+        if (!currentUserID) return;
+        try {
+            await fetch('/api/saveScore', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                name: playerName,
+                nrp: playerNRP,
+                score: score,
+                duration: durationInSeconds }),
+            });
+        } catch (e) {
+            console.error("Gagal menyimpan skor ke server:", e);
+        }
+    }
 
     window.onclick = function(event) {
       const finishPopup = document.getElementById("finishPopup");

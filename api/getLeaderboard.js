@@ -1,6 +1,6 @@
 import { supabase } from './_lib/supabaseClient.js';
 
-module.exports = async (req, res) => {
+export default async function handler(request, response) {
   // Hanya izinkan metode GET
   if (request.method !== 'GET') {
     return response.status(405).json({ message: 'Method Not Allowed' });
@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
       .from('scores')
       .select('name, nrp, score, duration')
       .order('score', { ascending: false })
-      .order('duration',{ascending:true})
+      .order('duration', { ascending: true })
       .limit(25);
 
     if (error) {

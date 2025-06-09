@@ -4,12 +4,12 @@ export default async function handler(req, res) {
   console.log('Request received:', req.method);
 
   if (req.method === 'POST') {
-    const { name, score } = req.body;
+    const { name, nrp, score, duration } = req.body;
 
     console.log('Received data:', { name, nrp, score, duration });
 
     if (!name || typeof score !== 'number') {
-      console.error('Invalid data:', { name, score });
+      console.error('Invalid data:', { name, nrp, score, duration });
       return res.status(400).json({ error: 'Invalid player name or score' });
     }
 

@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
     const { data, error } = await supabase
       .from('scores')
-      .insert([{ player_name: name, score }]);
+      .insert([{ name, score }]);
 
     if (error) {
       console.error('Insert error:', error);

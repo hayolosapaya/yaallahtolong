@@ -1,4 +1,4 @@
-import { supabase } from './_lib/supabaseClient.js';
+const { supabase } = require('./_lib/supabaseClient');
 
 export default async function handler(req, res) {
   // Hanya izinkan metode GET

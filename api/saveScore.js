@@ -1,4 +1,4 @@
-const { supabase } = require('./_lib/supabaseClient');
+import { supabase } from './_lib/supabaseClient.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {

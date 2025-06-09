@@ -76,5 +76,50 @@
         <a href="/" class="back-link">Kembali ke Game</a>
     </div>
 
+    <script>
+        // Fungsi untuk mengambil dan menampilkan data leaderboard
+        async function fetchLeaderboard() {
+            const tableContainer = document.getElementById('leaderboard-table');
+            try {
+                // Panggil API yang sudah kita buat
+                const response = await fetch('/api/getLeaderboard');
+                const data = await response.json();
+
+                if (data.length === 0) {
+                    tableContainer.innerHTML = '<p>Belum ada data skor.</p>';
+                    return;
+                }
+
+                // Buat struktur tabel HTML
+                let tableHTML = '<table>';
+                tableHTML += '<tr><th>Peringkat</th><th>Player Name</th><th>Player NRP</th><th>Skor</th><th>Durasi Pengerjaan</th></tr>';
+
+                // Isi setiap baris tabel dengan data dari API
+                data.forEach((player, index) => {
+                    tableHTML += `
+                        <tr>
+                            <td class="rank">${index + 1}</td>
+                            <td>${player.playername}</td>
+                            <td>${player.playernrp}</td>
+                            <td>${player.score}</td>
+                            <td>${player.durationinSecond}</td>
+                        </tr>
+                    `;
+                });
+
+                tableHTML += '</table>';
+
+                // Tampilkan tabel di halaman
+                tableContainer.innerHTML = tableHTML;
+
+            } catch (error) {
+                console.error('Gagal memuat leaderboard:', error);
+                tableContainer.innerHTML = '<p>Gagal memuat data. Silakan coba lagi nanti.</p>';
+            }
+        }
+
+        // Panggil fungsi saat halaman dimuat
+        window.onload = fetchLeaderboard;
+    </script>
 </body>
 </html>

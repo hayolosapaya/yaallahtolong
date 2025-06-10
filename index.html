@@ -479,26 +479,30 @@ document.getElementById("mainButtons").style.display = "block";
     }
 
     async function finishGame() {
-        await saveScore();
+    await saveScore(); // Tetap tunggu simpan skor
 
-        let userHighScore = score;
-        try {
-            const response = await fetch(`/api/getScore?playerName=${playerName}`);
-            const data = await response.json();
-            if (data && typeof data.score !== 'undefined') {
-                userHighScore = data.score;
-            }
-        } catch (e) {
-            console.error("Gagal mengambil skor tertinggi:", e);
-            userHighScore = score; 
+    // Tampilkan skor akhir dulu
+    const finalText = `Permainan selesai, <strong>${playerName}</strong>!
+    <br>Skor akhir kamu: <strong>${score}</strong> dari ${questions.length}.`;
+
+    document.getElementById("finalScoreText").innerHTML = finalText;
+    document.getElementById("finishPopup").style.display = "flex";
+
+    // Lanjutkan mengambil skor tertinggi (opsional, jika mau ditampilkan di tempat lain)
+    try {
+        const response = await fetch(`/api/getScore?playerName=${playerName}`);
+        const data = await response.json();
+        if (data && typeof data.score !== 'undefined') {
+            const userHighScore = data.score;
+            // Misalnya mau tampilkan skor tertinggi:
+            const highScoreText = `<br>Skor tertinggimu: <strong>${userHighScore}</strong>`;
+            document.getElementById("finalScoreText").innerHTML += highScoreText;
         }
-
-        const finalText = `Permainan selesai, <strong>${playerName}</strong>!
-        <br>Skor akhir kamu: <strong>${score}</strong> dari ${questions.length}.`;
-        
-        document.getElementById("finalScoreText").innerHTML = finalText;
-        document.getElementById("finishPopup").style.display = "flex";
+    } catch (e) {
+        console.error("Gagal mengambil skor tertinggi:", e);
     }
+}
+
 
     async function finishEarly() {
     document.getElementById("confirmPopup").style.display = "none";

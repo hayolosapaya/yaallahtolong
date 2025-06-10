@@ -14,7 +14,7 @@ export default async function handler(req, res) {
       .select('name, nrp, score, duration')
       .order('score', { ascending: false })
       .order('duration', { ascending: true })
-      .limit(25);
+      .limit(150);
 
     if (error) {
       throw error;

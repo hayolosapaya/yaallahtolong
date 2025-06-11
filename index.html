@@ -494,6 +494,8 @@ document.getElementById("mainButtons").style.display = "block";
     }
 
     async function finishGame() {
+    document.getElementById("finalScoreText").innerHTML = "Menunggu permainan selesai...";
+    document.getElementById("finishPopup").style.display = "flex";
     await saveScore(); // Tetap tunggu simpan skor
 
     // Tampilkan skor akhir dulu
